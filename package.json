@@ -1,0 +1,25 @@
+{
+  "name": "zilch",
+  "version": "1.0.0",
+  "description": "A Web chatting app",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server",
+    "dev" : "nodemon server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AAA530/Zilch.git"
+  },
+  "author": "AAA",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AAA530/Zilch/issues"
+  },
+  "homepage": "https://github.com/AAA530/Zilch#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "moment": "^2.25.1",
+    "socket.io": "^2.3.0"
+  }
+}
