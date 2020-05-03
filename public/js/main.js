@@ -2,6 +2,8 @@ const socket = io()
 const chatForm = document.getElementById('chat-form')
 const message_input = document.getElementById('msg')
 const ApperChat = document.getElementById('chat_msg')
+const roomName = document.getElementById('room-name')
+const userList = document.getElementById('users')
 
 
 // get username and room name
@@ -20,6 +22,11 @@ socket.on('message',data=>{
     ApperChat.scrollTop = ApperChat.scrollHeight
 })
 
+socket.on('sendUserData',({room,users})=>{
+    outputRoom(room)
+    outputUsers(users)
+})
+
 chatForm.addEventListener('submit',e=>{
     e.preventDefault()
     const msg  = message_input.value
@@ -36,4 +43,12 @@ function outputMessage (message) {
         ${message.text}
     </p>`
     ApperChat.appendChild(div)
+}
+
+function outputRoom(room){
+    roomName.innerHTML = room
+}
+
+function outputUsers(users){
+    userList.innerHTML = `${users.map(user => `<li>${user.username}</li>`).join('')}`;
 }

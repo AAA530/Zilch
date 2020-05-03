@@ -32,17 +32,33 @@ io.on('connection',socket =>{
             io.to(user.room).emit('message',formatMessage(user.username,data))
         })
 
+        io.to(user.room).emit('sendUserData',{
+            room : user.room,
+            users : getUserRoom(user.room)
+        })
+
         //when user disconnect
         socket.on('disconnect',data=>{
             const user = userLeave(socket.id)
 
             if(user){
                 io.to(user.room).emit('message',formatMessage(botName,`${user.username} left the chat`))
+                
+                io.to(user.room).emit('sendUserData',{
+                    room : user.room,
+                    users : getUserRoom(user.room)
+                })
             }
-        })
 
+            
+        })
     })
+
+
 })
+
+
+
 
 app.use(express.static('public'))
 
