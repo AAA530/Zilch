@@ -3,6 +3,16 @@ const chatForm = document.getElementById('chat-form')
 const message_input = document.getElementById('msg')
 const ApperChat = document.getElementById('chat_msg')
 
+
+// get username and room name
+const {username,room} = Qs.parse(location.search,{
+    ignoreQueryPrefix : true
+})
+
+console.log(username + " " + room)
+
+socket.emit('join-chat',{username,room})
+
 socket.on('message',data=>{
     console.log(data)
     outputMessage(data)
@@ -21,9 +31,9 @@ chatForm.addEventListener('submit',e=>{
 function outputMessage (message) {
     const div = document.createElement('div')
     div.className = 'message'
-    div.innerHTML = `<p class="meta">Brad <span>9:12pm</span></p>
+    div.innerHTML = `<p class="meta">${message.username} <span>${message.time}</span></p>
     <p class="text">
-        ${message}
+        ${message.text}
     </p>`
     ApperChat.appendChild(div)
 }
