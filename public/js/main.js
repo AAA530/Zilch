@@ -1,10 +1,13 @@
 const socket = io()
 const chatForm = document.getElementById('chat-form')
 const message_input = document.getElementById('msg')
+const ApperChat = document.getElementById('chat_msg')
 
 socket.on('message',data=>{
     console.log(data)
     outputMessage(data)
+
+    ApperChat.scrollTop = ApperChat.scrollHeight
 })
 
 chatForm.addEventListener('submit',e=>{
@@ -12,6 +15,7 @@ chatForm.addEventListener('submit',e=>{
     const msg  = message_input.value
     socket.emit('chatMessage',msg)
     message_input.value = ''
+    message_input.focus()
 })
 
 function outputMessage (message) {
@@ -21,5 +25,5 @@ function outputMessage (message) {
     <p class="text">
         ${message}
     </p>`
-    document.getElementById('chat_msg').appendChild(div)
+    ApperChat.appendChild(div)
 }
