@@ -8,8 +8,19 @@ const server = http.createServer(app)        //server for app
 const io = socketio(server)                 // server for socket.io
 
 io.on('connection',socket =>{
-    console.log("New connection")
     socket.emit('message','yo man')
+
+    //when user connects
+    socket.broadcast.emit('message','A user connected')
+
+    //when user disconnect
+    socket.on('disconnect',data=>{
+        io.emit('message',"A user just left chat")
+    })
+
+    socket.on('chatMessage',data=>{
+        io.emit('message',data)
+    })
 })
 
 app.use(express.static('public'))
