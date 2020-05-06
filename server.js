@@ -66,7 +66,7 @@ app.get('/',function(req,res) {
     res.sendFile('index.html');
   });
 
-PORT = 3000 || process.env.PORT
+PORT = process.env.PORT || 3000
 
 server.listen(PORT,()=>{
     console.log(`Started server on ${PORT}`)
