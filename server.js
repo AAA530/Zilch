@@ -62,6 +62,9 @@ io.on('connection',socket =>{
 
 app.use(express.static('public'))
 
+app.get('/',function(req,res) {
+    res.sendFile('index.html');
+  });
 
 PORT = 3000 || process.env.PORT
 
