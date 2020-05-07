@@ -1,4 +1,5 @@
 const express = require('express')
+const mongoose  = require('mongoose')
 const http = require('http')
 const socketio = require('socket.io')
 const formatMessage = require('./utils/message')
@@ -8,6 +9,20 @@ const app = express()
 
 const server = http.createServer(app)        //server for app
 const io = socketio(server)                 // server for socket.io
+
+mongoose.set('useNewUrlParser', true);
+mongoose.set('useFindAndModify', false);
+mongoose.set('useCreateIndex', true);
+mongoose.set('useUnifiedTopology', true);    
+
+mongoose.connect("mongodb://localhost/Zilch",(err,db)=>{
+    if(err){
+        console.log(err)
+    }
+    else{
+        console.log("Db connected")
+    }
+});
 
 const botName = 'Zilch Bot'
 
