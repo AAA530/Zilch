@@ -11,8 +11,8 @@ const userList = document.getElementById('users')
 //     ignoreQueryPrefix : true
 // })
 
-// const username = document.getElementById('user').value
-// const room = document.getElementById('room').value
+// const username = document.getElementById('user').value   //want to get node variable here 
+// const room = document.getElementById('room').value       //want to get node variable here 
 const username = "dam"
 const room = "test"
 
