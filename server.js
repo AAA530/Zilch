@@ -1,5 +1,6 @@
 const express = require('express')
 const mongoose  = require('mongoose')
+const bodyParser = require('body-parser')
 const http = require('http')
 const socketio = require('socket.io')
 const formatMessage = require('./utils/message')
@@ -14,6 +15,9 @@ mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 mongoose.set('useUnifiedTopology', true);    
+
+app.set("view engine", "ejs");
+app.use(bodyParser.urlencoded({extended:true}));
 
 
 const botName = 'Zilch Bot'
@@ -93,8 +97,14 @@ mongoose.connect("mongodb://localhost/Zilch",(err,db)=>{
 app.use(express.static('public'))
 
 app.get('/',function(req,res) {
-    res.sendFile('index.html');
-  });
+    res.render('index');
+});
+
+app.post('/chats',function(req,res) {
+    username = req.body.username
+    room = req.body.room
+    res.render('chat',{username : username,room : room});
+});
 
 PORT = process.env.PORT || 3000
 

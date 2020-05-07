@@ -7,9 +7,14 @@ const userList = document.getElementById('users')
 
 
 // get username and room name
-const {username,room} = Qs.parse(location.search,{
-    ignoreQueryPrefix : true
-})
+// const {username,room} = Qs.parse(location.search,{
+//     ignoreQueryPrefix : true
+// })
+
+// const username = document.getElementById('user').value
+// const room = document.getElementById('room').value
+const username = "dam"
+const room = "test"
 
 console.log(username + " " + room)
 
