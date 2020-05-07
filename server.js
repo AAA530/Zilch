@@ -15,62 +15,77 @@ mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 mongoose.set('useUnifiedTopology', true);    
 
+
+const botName = 'Zilch Bot'
+
 mongoose.connect("mongodb://localhost/Zilch",(err,db)=>{
     if(err){
         console.log(err)
     }
     else{
         console.log("Db connected")
-    }
-});
 
-const botName = 'Zilch Bot'
+        io.on('connection',socket =>{
 
-io.on('connection',socket =>{
+            socket.on('join-chat',({username ,room})=>{
 
-    socket.on('join-chat',({username ,room})=>{
+                const user = userJoin(socket.id , username , room)
 
-        const user = userJoin(socket.id , username , room)
+                socket.join(user.room)
 
-        socket.join(user.room)
+                let chat = db.collection(room);
 
-        socket.emit('message',formatMessage(botName,'Wellcome to Zilch!'))
+                chat.find().limit(100).sort({_id:1}).toArray((err,res)=>{
+                    if(err){
+                        console.log(err)
+                    }
+                    socket.emit("output",res)
+                })
+        
+        
+                socket.emit('message',formatMessage(botName,'Wellcome to Zilch!'))
+        
+                //when user connects
+                socket.broadcast.to(user.room).emit('message',formatMessage(botName,`${user.username} has joined the chat`))
+                console.log(user.room)
+        
+                //sending chat message
+                socket.on('chatMessage',data=>{
+                    const user = getUser(socket.id)
 
-        //when user connects
-        socket.broadcast.to(user.room).emit('message',formatMessage(botName,`${user.username} has joined the chat`))
-        console.log(user.room)
+                    chat.insert({username: user.username, text: data}, function(){
+                        io.to(user.room).emit('message',formatMessage(user.username,data))
+                    });
 
-        //sending chat message
-        socket.on('chatMessage',data=>{
-            const user = getUser(socket.id)
-
-            io.to(user.room).emit('message',formatMessage(user.username,data))
-        })
-
-        io.to(user.room).emit('sendUserData',{
-            room : user.room,
-            users : getUserRoom(user.room)
-        })
-
-        //when user disconnect
-        socket.on('disconnect',data=>{
-            const user = userLeave(socket.id)
-
-            if(user){
-                io.to(user.room).emit('message',formatMessage(botName,`${user.username} left the chat`))
-                
+                })
+        
                 io.to(user.room).emit('sendUserData',{
                     room : user.room,
                     users : getUserRoom(user.room)
                 })
-            }
-
-            
+        
+                //when user disconnect
+                socket.on('disconnect',data=>{
+                    const user = userLeave(socket.id)
+        
+                    if(user){
+                        io.to(user.room).emit('message',formatMessage(botName,`${user.username} left the chat`))
+                        
+                        io.to(user.room).emit('sendUserData',{
+                            room : user.room,
+                            users : getUserRoom(user.room)
+                        })
+                    }
+        
+                    
+                })
+            })
+        
+        
         })
-    })
 
-
-})
+    }
+});
 
 
 

@@ -22,6 +22,15 @@ socket.on('message',data=>{
     ApperChat.scrollTop = ApperChat.scrollHeight
 })
 
+socket.on('output',data=>{
+    console.log(data)
+    data.forEach(element => {
+        outputMessage(element)
+        ApperChat.scrollTop = ApperChat.scrollHeight
+    });
+    
+})
+
 socket.on('sendUserData',({room,users})=>{
     outputRoom(room)
     outputUsers(users)
@@ -36,6 +45,7 @@ chatForm.addEventListener('submit',e=>{
 })
 
 function outputMessage (message) {
+    console.log(message)
     const div = document.createElement('div')
     div.className = 'message'
     div.innerHTML = `<p class="meta">${message.username} <span>${message.time}</span></p>
