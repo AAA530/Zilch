@@ -13,8 +13,12 @@ const userList = document.getElementById('users')
 
 // const username = document.getElementById('user').value   //want to get node variable here 
 // const room = document.getElementById('room').value       //want to get node variable here 
-const username = "dam"
-const room = "test"
+// const username = "dam"
+// const room = "test"
+
+
+
+// console.log(u + "****")
 
 console.log(username + " " + room)
 

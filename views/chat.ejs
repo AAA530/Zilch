@@ -11,7 +11,7 @@
   <div class="chat-container">
     <header class="chat-header">
       <h1>Zilch <i class="fas fa-fire"></i></h1>
-      <a href="index.html" class="btn">Leave Room</a>
+      <a href="/" class="btn">Leave Room</a>
     </header>
     <main class="chat-main">
       <div class="chat-sidebar">
@@ -37,10 +37,12 @@
     </div>
   </div>
 
-  <div class="none">
-    <span id="user"><%= username %></span>
-    <span id="room"><%= room %></span>
-  </div>
+
+<!-- Code to get variables in javascript variables -->
+  <script>
+    const username = <%- JSON.stringify(username) %>;
+    const room = <%- JSON.stringify(room) %>;
+  </script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.9.3/qs.min.js" integrity="sha256-lSPkSu/D04IeqWOhTgTf5tLzNFEc37oNE9ysGS9PdK4=" crossorigin="anonymous"></script>
   <script src="/socket.io/socket.io.js"></script>
