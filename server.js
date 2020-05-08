@@ -47,7 +47,7 @@ mongoose.connect("mongodb://localhost/Zilch",(err,db)=>{
                 })
         
         
-                socket.emit('message',formatMessage(botName,'Wellcome to Zilch!'))
+                socket.emit('message',formatMessage(botName,'Wellcome to Zilch!'," "))
         
                 //when user connects
                 socket.broadcast.to(user.room).emit('message',formatMessage(botName,`${user.username} has joined the chat`))
@@ -57,8 +57,8 @@ mongoose.connect("mongodb://localhost/Zilch",(err,db)=>{
                 socket.on('chatMessage',data=>{
                     const user = getUser(socket.id)
 
-                    chat.insert({username: user.username, text: data}, function(){
-                        io.to(user.room).emit('message',formatMessage(user.username,data))
+                    chat.insertOne({username: user.username, text: data.msg ,time : data.time}, function(){
+                        io.to(user.room).emit('message',formatMessage(user.username,data.msg,data.time))
                     });
 
                 })

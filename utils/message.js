@@ -1,10 +1,8 @@
-const moment = require('moment')
-
-function formatMessage(username,text){
+function formatMessage(username,text,time){           // get username , text and time from user and convert to object
     return {
         username,
         text,
-        time: moment().format('h:mm a')
+        time,
     }
 }
 

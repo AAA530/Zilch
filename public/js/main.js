@@ -48,7 +48,12 @@ socket.on('sendUserData',({room,users})=>{
 chatForm.addEventListener('submit',e=>{
     e.preventDefault()
     const msg  = message_input.value
-    socket.emit('chatMessage',msg)
+    const time = "("+moment().format('MMMM Do YYYY, h:mm a')+")";
+    const data ={
+        msg,
+        time,
+    }
+    socket.emit('chatMessage',data)
     message_input.value = ''
     message_input.focus()
 })
