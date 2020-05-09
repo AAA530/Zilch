@@ -50,7 +50,7 @@ mongoose.connect("mongodb://localhost/Zilch",(err,db)=>{
                 socket.emit('message',formatMessage(botName,'Wellcome to Zilch!'," "))
         
                 //when user connects
-                socket.broadcast.to(user.room).emit('message',formatMessage(botName,`${user.username} has joined the chat`))
+                socket.broadcast.to(user.room).emit('message',formatMessage(botName,`${user.username} has joined the chat`," "))
                 console.log(user.room)
         
                 //sending chat message
@@ -73,7 +73,7 @@ mongoose.connect("mongodb://localhost/Zilch",(err,db)=>{
                     const user = userLeave(socket.id)
         
                     if(user){
-                        io.to(user.room).emit('message',formatMessage(botName,`${user.username} left the chat`))
+                        io.to(user.room).emit('message',formatMessage(botName,`${user.username} left the chat`," "))
                         
                         io.to(user.room).emit('sendUserData',{
                             room : user.room,
