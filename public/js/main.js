@@ -4,6 +4,7 @@ const message_input = document.getElementById('msg')
 const ApperChat = document.getElementById('chat_msg')
 const roomName = document.getElementById('room-name')
 const userList = document.getElementById('users')
+const clear_button = document.getElementById('clear-btn')
 
 
 // get username and room name
@@ -45,6 +46,8 @@ socket.on('sendUserData',({room,users})=>{
     outputUsers(users)
 })
 
+
+//sending message from client to server
 chatForm.addEventListener('submit',e=>{
     e.preventDefault()
     const msg  = message_input.value
@@ -57,6 +60,13 @@ chatForm.addEventListener('submit',e=>{
     message_input.value = ''
     message_input.focus()
 })
+
+//clearing messages from screen
+clear_button.addEventListener('click',e=>{
+    socket.emit('clear')
+    location.reload();
+})
+
 
 function outputMessage (message) {
     console.log(message)

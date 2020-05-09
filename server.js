@@ -83,6 +83,11 @@ mongoose.connect("mongodb://localhost/Zilch",(err,db)=>{
         
                     
                 })
+
+                socket.on('clear',()=>{
+                    chat.remove({},()=>{console.log("removed")})
+                })
+
             })
         
         
