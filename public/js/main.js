@@ -46,6 +46,9 @@ socket.on('sendUserData',({room,users})=>{
     outputUsers(users)
 })
 
+socket.on('clear',()=>{
+    location.reload();
+})
 
 //sending message from client to server
 chatForm.addEventListener('submit',e=>{
